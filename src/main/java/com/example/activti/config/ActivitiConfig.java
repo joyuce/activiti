@@ -1,7 +1,5 @@
 package com.example.activti.config;
 
-import java.util.UUID;
-
 import javax.sql.DataSource;
 
 import org.activiti.engine.*;
@@ -13,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.PlatformTransactionManager;
+
+import cn.hutool.core.util.IdUtil;
 
 /**
  * ActivitiConfig
@@ -36,7 +36,7 @@ public class ActivitiConfig {
 
         processEngineConfiguration.setTransactionManager(transactionManager);
         //主键生成替换为 uuid
-        processEngineConfiguration.setIdGenerator(() -> UUID.randomUUID().toString());
+        processEngineConfiguration.setIdGenerator(IdUtil::fastSimpleUUID);
 
         //流程图字体
         processEngineConfiguration.setActivityFontName("宋体");
