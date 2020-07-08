@@ -8,14 +8,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.activiti.engine.HistoryService;
-import org.activiti.engine.RepositoryService;
-import org.activiti.engine.RuntimeService;
-import org.activiti.engine.TaskService;
+import org.activiti.engine.*;
 import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.history.HistoricVariableInstance;
+import org.activiti.engine.identity.Group;
 import org.activiti.engine.impl.identity.Authentication;
+import org.activiti.engine.impl.persistence.entity.GroupEntity;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.repository.ProcessDefinitionQuery;
 import org.activiti.engine.runtime.ProcessInstance;
@@ -45,6 +44,21 @@ public class RepairTest {
     TaskService taskService;
     @Autowired
     HistoryService historyService;
+    @Autowired
+    IdentityService identityService;
+
+    /**
+     * 创建组
+     * 操作的数据表：act_id_group
+     */
+    @Test
+    public void test2() {
+        Group group = new GroupEntity();
+        group.setId("1");
+        group.setName("财务组");
+        group.setType("G");
+        identityService.saveGroup(group);
+    }
 
 
     /**
@@ -250,7 +264,7 @@ public class RepairTest {
 
         List<HistoricTaskInstance> list = historyService // 历史相关Service
                                                          .createHistoricTaskInstanceQuery() // 创建历史活动实例查询
-                                                         .processInstanceId(processInstanceId) // 执行流程实例id
+                                                         //.processInstanceId(processInstanceId) // 执行流程实例id
                                                          .orderByHistoricTaskInstanceStartTime().asc().list();
         for (HistoricTaskInstance hai : list) {
             System.out.println("任务ID:" + hai.getId());
@@ -277,6 +291,7 @@ public class RepairTest {
 
         List<HistoricProcessInstance> list = historyService // 历史相关Service
                                                             .createHistoricProcessInstanceQuery() // 创建历史活动实例查询
+                                                            .unfinished()
                                                             .list();
         for (HistoricProcessInstance hai : list) {
             System.out.println("=================================");

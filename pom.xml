@@ -17,9 +17,28 @@
 	<properties>
 		<java.version>1.8</java.version>
 		<activiti.version>5.22.0</activiti.version>
+        <swagger.version>2.9.2</swagger.version>
 	</properties>
 
 	<dependencies>
+		<dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+        <!-- swagger api 开始 -->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>${swagger.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>swagger-bootstrap-ui</artifactId>
+            <version>1.9.3</version>
+        </dependency>
+        <!-- swagger api 结束 -->
+
          <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
