@@ -75,7 +75,8 @@ public class WorkflowController  {
         return new CommonResult<>(workflow);
     }
 
-    
+    @ApiOperation(value = "查询流程", notes = "查询流程")
+    @RequestMapping(value = "/workflow", method = RequestMethod.GET)
     public CommonResult<List<Workflow>> selectWorkflow(
             String tenantId, Boolean isFinished, Integer pageNum, Integer pageSize
     ) {
@@ -99,13 +100,15 @@ public class WorkflowController  {
         return new CommonResult<>(rs);
     }
 
-    
+    @ApiOperation(value = "取消流程", notes = "取消流程")
+    @RequestMapping(value = "/workflow/cancel", method = RequestMethod.POST)
     public CommonResult<Boolean> cancelWorkflow(WorkflowRq rq) {
         runtimeService.deleteProcessInstance(rq.getProcessInstanceId(), rq.getDeleteReason());
         return new CommonResult<>(true);
     }
 
-    
+    @ApiOperation(value = "查询任务", notes = "查询任务")
+    @RequestMapping(value = "/task", method = RequestMethod.GET)
     public CommonResult<List<Task>> selectTask(
             String tenantId, String assignee, String processInstanceId, Boolean isFinished, Integer pageNum,
             Integer pageSize
@@ -136,7 +139,8 @@ public class WorkflowController  {
         return new CommonResult<>(rs);
     }
 
-    
+    @ApiOperation(value = "提交任务", notes = "提交任务")
+    @RequestMapping(value = "/task", method = RequestMethod.POST)
     public CommonResult<Boolean> submitTask(
             TaskRq rq
     ) {
@@ -147,7 +151,8 @@ public class WorkflowController  {
         return new CommonResult<>(true);
     }
 
-    
+    @ApiOperation(value = "委派任务", notes = "委派任务")
+    @RequestMapping(value = "/task/claim", method = RequestMethod.POST)
     public CommonResult<Boolean> claimTask(
             TaskRq rq
     ) {
