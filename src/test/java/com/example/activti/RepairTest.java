@@ -12,9 +12,7 @@ import org.activiti.engine.*;
 import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.history.HistoricVariableInstance;
-import org.activiti.engine.identity.Group;
 import org.activiti.engine.impl.identity.Authentication;
-import org.activiti.engine.impl.persistence.entity.GroupEntity;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.repository.ProcessDefinitionQuery;
 import org.activiti.engine.runtime.ProcessInstance;
@@ -53,11 +51,15 @@ public class RepairTest {
      */
     @Test
     public void test2() {
-        Group group = new GroupEntity();
-        group.setId("1");
-        group.setName("财务组");
-        group.setType("G");
-        identityService.saveGroup(group);
+        //historyService.createHistoricProcessInstanceQuery().variableValueEquals().startedBy()
+        //historyService.createHistoricTaskInstanceQuery().taskOwner()
+        //taskService.setOwner();
+        taskService.setAssignee("8ed7e64a95224980ba6d6fdba95b297d","123");
+        //Group group = new GroupEntity();
+        //group.setId("1");
+        //group.setName("财务组");
+        //group.setType("G");
+        //identityService.saveGroup(group);
     }
 
 
