@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,17 +52,27 @@ public class RepairTest {
      */
     @Test
     public void test2() {
-        //historyService.createHistoricProcessInstanceQuery().variableValueEquals().startedBy()
+
+        List<HistoricProcessInstance> list = historyService.createHistoricProcessInstanceQuery().limitProcessInstanceVariables(1).list();
+        HistoricProcessInstance h = list.get(0);
+        Map<String, Object> map = new HashMap<>();
+        map.put("date", LocalDateTime.now());
+        runtimeService.setVariables(h.getId(),map);
+
+        map = h.getProcessVariables();
+        List<HistoricVariableInstance> p = historyService.createHistoricVariableInstanceQuery().processInstanceId(h.getId()).list();
+        for (HistoricVariableInstance i:p){
+            map.put(i.getVariableName(),i.getValue());
+        }
         //historyService.createHistoricTaskInstanceQuery().taskOwner()
         //taskService.setOwner();
-        taskService.setAssignee("8ed7e64a95224980ba6d6fdba95b297d","123");
+        taskService.setAssignee("8ed7e64a95224980ba6d6fdba95b297d", "123");
         //Group group = new GroupEntity();
         //group.setId("1");
         //group.setName("财务组");
         //group.setType("G");
         //identityService.saveGroup(group);
     }
-
 
     /**
      * 性能测试数据
@@ -75,7 +86,7 @@ public class RepairTest {
             String processDefinitionKey = "repair";
             //流程参数填充
             HashMap<String, Object> variables = new HashMap<>();
-            variables.put("client", "客户"+i);
+            variables.put("client", "客户" + i);
             ProcessInstance instance = runtimeService.startProcessInstanceByKey(processDefinitionKey, variables);
         }
     }
@@ -84,7 +95,7 @@ public class RepairTest {
      * 全部流程测试
      */
     @Test
-    public void testAll(){
+    public void testAll() {
         //启动流程
         start();
         //客户提交报修
@@ -107,7 +118,6 @@ public class RepairTest {
         historyTaskInstanceList();
     }
 
-
     /**
      * 启动流程
      */
@@ -126,7 +136,7 @@ public class RepairTest {
         System.out.println("流程实例ID:" + instance.getId());
         System.out.println("流程定义ID:" + instance.getProcessDefinitionId());
         processInstanceId = instance.getId();
-        
+
     }
 
     String processInstanceId = "187501";
@@ -293,12 +303,11 @@ public class RepairTest {
 
         List<HistoricProcessInstance> list = historyService // 历史相关Service
                                                             .createHistoricProcessInstanceQuery() // 创建历史活动实例查询
-                                                            .unfinished()
-                                                            .list();
+                                                            .unfinished().list();
         for (HistoricProcessInstance hai : list) {
             System.out.println("=================================");
             System.out.println("流程实例所属流程定义id：" + hai.getProcessDefinitionId());
-            System.out.println("流程实例id："+ hai.getId());
+            System.out.println("流程实例id：" + hai.getId());
             System.out.println("业务标识：" + hai.getBusinessKey());
             System.out.println("开始执行时间：" + hai.getStartTime());
             System.out.println("结束执行时间：" + hai.getEndTime());
@@ -312,7 +321,6 @@ public class RepairTest {
             System.out.println("=================================");
         }
     }
-
 
     /**
      * 取消流程
@@ -375,8 +383,7 @@ public class RepairTest {
         InputStream png = repositoryService
                 .getResourceAsStream(deploymentId, processDefinition.getDiagramResourceName());
 
-        InputStream xml = repositoryService
-                .getResourceAsStream(deploymentId, processDefinition.getResourceName());
+        InputStream xml = repositoryService.getResourceAsStream(deploymentId, processDefinition.getResourceName());
 
         //构建输出流
         //File file = new File();
@@ -386,8 +393,7 @@ public class RepairTest {
         try {
             pngFile = new FileOutputStream(
                     "C:\\Users\\EDZ\\Desktop\\新建文件夹\\" + processDefinition.getDiagramResourceName());
-            xmlFile = new FileOutputStream(
-                    "C:\\Users\\EDZ\\Desktop\\新建文件夹\\" + processDefinition.getResourceName());
+            xmlFile = new FileOutputStream("C:\\Users\\EDZ\\Desktop\\新建文件夹\\" + processDefinition.getResourceName());
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
