@@ -53,13 +53,15 @@ public class RepairTest {
     @Test
     public void test2() {
 
-        List<HistoricProcessInstance> list = historyService.createHistoricProcessInstanceQuery().limitProcessInstanceVariables(1).list();
+        List<HistoricProcessInstance> list = historyService.createHistoricProcessInstanceQuery().includeProcessVariables().list();
         HistoricProcessInstance h = list.get(0);
+
         Map<String, Object> map = new HashMap<>();
+        map = h.getProcessVariables();
         map.put("date", LocalDateTime.now());
         runtimeService.setVariables(h.getId(),map);
 
-        map = h.getProcessVariables();
+
         List<HistoricVariableInstance> p = historyService.createHistoricVariableInstanceQuery().processInstanceId(h.getId()).list();
         for (HistoricVariableInstance i:p){
             map.put(i.getVariableName(),i.getValue());
