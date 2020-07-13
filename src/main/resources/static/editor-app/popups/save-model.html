@@ -6,6 +6,16 @@
             <h2>{{'MODEL.SAVE.TITLE' | translate}}</h2>
         </div>
         <div class="modal-body">
+            <div class="form-group">
+                <label for="tenantId">{{'MODEL.TENANTID' | translate}}</label>
+                <input type="text"
+                       ng-disabled="status.loading"
+                       id="tenantId"
+                       class="form-control"
+                       ng-model="saveDialog.tenantId"
+                       ui-keypress="{13:'save()'}"
+                       auto-focus />
+            </div>
 
         	<div class="form-group">
            		<label for="nameField">{{'MODEL.NAME' | translate}}</label>

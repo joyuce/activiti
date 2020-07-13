@@ -101,6 +101,7 @@ activitiModeler
                     success(function (data, status, headers, config) {
                         $rootScope.editor = new ORYX.Editor(data);
                         $rootScope.modelData = angular.fromJson(data);
+                        debugger
                         $rootScope.editorFactory.resolve();
                     }).
                     error(function (data, status, headers, config) {

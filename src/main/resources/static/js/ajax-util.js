@@ -70,7 +70,9 @@ __ajax = function(url, data, success, type ,contentType){
     if(contentType){
         config.contentType = contentType;
     }
-
+    config.beforeSend = function (xhr) {
+        xhr.setRequestHeader("XSRF-TOKEN", _csrf);
+    }
     var token = $.cookie("token");
     if(token){
         config.beforeSend = function (xhr) {
@@ -79,7 +81,19 @@ __ajax = function(url, data, success, type ,contentType){
     }
     $.ajax(config)
 };
-
+//  将Cookie转换为JS Object
+function initCookies() {
+    var cookie = document.cookie,
+        items = cookie.split(";"),
+        keys = {};
+    items.forEach(function(item) {
+        var kv = item.split('=');
+        keys[$.trim(kv[0])] = $.trim(kv[1]);
+    });
+    return keys;
+}
+//  获取CSRF Token
+var _csrf = initCookies()['XSRF-TOKEN'];
 //再再次封装
 AJAX = {
   GET:function(url, data, success){

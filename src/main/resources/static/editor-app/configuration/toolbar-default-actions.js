@@ -294,16 +294,21 @@ KISBPM.TOOLBAR = {
 /** Custom controller for the save dialog */
 var SaveModelCtrl = [ '$rootScope', '$scope', '$http', '$route', '$location',
     function ($rootScope, $scope, $http, $route, $location) {
-
+    debugger;
     var modelMetaData = $scope.editor.getModelMetaData();
-
+    debugger;
     var description = '';
     if (modelMetaData.description) {
     	description = modelMetaData.description;
     }
-    
+    var tenantId = '';
+    if (modelMetaData.tenantId) {
+        tenantId = modelMetaData.tenantId;
+    }
     var saveDialog = { 'name' : modelMetaData.name,
-            'description' : description};
+            'description' : description,
+        'tenantId' : tenantId
+    };
     
     $scope.saveDialog = saveDialog;
     
@@ -339,7 +344,7 @@ var SaveModelCtrl = [ '$rootScope', '$scope', '$http', '$route', '$location',
         $scope.status = {
         	loading: true
         };
-        
+        modelMetaData.tenantId = $scope.saveDialog.tenantId;
         modelMetaData.name = $scope.saveDialog.name;
         modelMetaData.description = $scope.saveDialog.description;
 
@@ -372,7 +377,8 @@ var SaveModelCtrl = [ '$rootScope', '$scope', '$http', '$route', '$location',
             json_xml: json,
             svg_xml: svgDOM,
             name: $scope.saveDialog.name,
-            description: $scope.saveDialog.description
+            description: $scope.saveDialog.description,
+            tenantId: $scope.saveDialog.tenantId
         };
 
         // Update

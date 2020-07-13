@@ -10884,7 +10884,7 @@ ORYX.Editor = {
 		
 		//meta data about the model for the signavio warehouse
 		//directory, new, name, description, revision, model (the model data)
-		
+		debugger;
 		this.modelMetaData = config;
 		
 		var model = config;

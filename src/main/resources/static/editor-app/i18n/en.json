@@ -263,6 +263,7 @@
     "PROPERTY.SEQUENCEFLOW.CONDITION.NO-CONDITION-DISPLAY" : "没有条件",
 
     "MODEL.SAVE.TITLE" : "保存模型",
+    "MODEL.TENANTID" : "租户隔离",
     "MODEL.NAME" : "名称",
     "MODEL.DESCRIPTION" : "描述",
     "MODEL.SAVE.NEWVERSION" : "保存为新版本? 这样你可以随时回到以前的版本",
