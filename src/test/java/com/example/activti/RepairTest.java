@@ -373,7 +373,7 @@ public class RepairTest {
         //获取查询器
         ProcessDefinitionQuery processDefinitionQuery = repositoryService.createProcessDefinitionQuery();
         //设置查询条件
-        processDefinitionQuery.processDefinitionKey("repair");
+        processDefinitionQuery.processDefinitionKey("serverTask");
 
         //执行查询操作，得到想要流程定义信息
         ProcessDefinition processDefinition = processDefinitionQuery.singleResult();

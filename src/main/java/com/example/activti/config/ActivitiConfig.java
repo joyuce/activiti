@@ -42,7 +42,8 @@ public class ActivitiConfig {
         processEngineConfiguration.setActivityFontName("宋体");
         processEngineConfiguration.setAnnotationFontName("宋体");
         processEngineConfiguration.setLabelFontName("宋体");
-
+        //启用定时任务
+        processEngineConfiguration.setJobExecutorActivate(true);
         //这段代码表示是否使用activiti自带用户组织表，如果是，这里为true
         // 如果不是，这里为false。由于本项目使用了视图的方式代替了原有的用户组织表，
         // 所以这里设置为false，这样启动就不用去检查用户组织表是否存在。
